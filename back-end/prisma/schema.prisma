@@ -10,28 +10,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Team {
+model team {
   id     Int      @id @default(autoincrement())
   name   String
 }
 
-model Players {
-  id        Int      @id @default(autoincrement())
-  name      String
-  position  Int
-  number    Int
-  TeamID    Int
+model players { 
+  name        String   @id @unique
+  position    Int
+  number      Int
+  gamePlayers gameplayer[]
 }
 
-model Game {
-  id        Int      @id @default(autoincrement())
-  pate      DateTime
-  place     String
-  opponent  String
-  division  String
+model game {
+  id          Int      @id @default(autoincrement())
+  date        String   
+  place       String
+  opponent    String
+  division    String
+  gamePlayers gameplayer[]
 }
 
-model Event {
+model event {
   id          Int      @id @default(autoincrement())
   GameId      Int
   half        Int
@@ -39,9 +39,18 @@ model Event {
   EventTypeId Int
 }
 
-model EventType {
+model eventType {
   id        Int      @id @default(autoincrement())
   name      String
   subType   Int
   score     Int        @default(0)
+}
+
+model gameplayer {
+  game      game     @relation(fields: [gameId], references: [id])
+  gameId    Int
+  player    players  @relation(fields: [playerId], references: [name])
+  playerId  String
+
+  @@id([gameId, playerId])
 }

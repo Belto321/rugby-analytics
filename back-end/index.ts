@@ -1,17 +1,34 @@
-import { PrismaClient } from '@prisma/client'
+import express from 'express';
+import newGameRouter from './routes/newGameRouter';
+import playersRouter from './routes/playersRouter';
+const cors = require('cors');
 
-const prisma = new PrismaClient()
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-async function main() {
-  // ... you will write your Prisma Client queries here
-}
+app.use(express.json());
+app.use(cors());
 
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+app.use('/newgame', newGameRouter);
+app.use('/players', playersRouter);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+// import { PrismaClient } from '@prisma/client'
+
+// const prisma = new PrismaClient()
+
+// async function main() {
+//   // ... you will write your Prisma Client queries here
+// }
+
+// main()
+//   .then(async () => {
+//     await prisma.$disconnect()
+//   })
+//   .catch(async (e) => {
+//     console.error(e)
+//     await prisma.$disconnect()
+//     process.exit(1)
+//   })
