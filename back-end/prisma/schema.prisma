@@ -34,12 +34,12 @@ model game {
 model event {
   id          Int      @id @default(autoincrement())
   GameId      Int
-  half        Int
-  PlayerId    Int
+  half        Boolean
+  PlayerId    String
   EventTypeId Int
 }
 
-model eventType {
+model eventtype {
   id        Int      @id @default(autoincrement())
   name      String
   subType   Int

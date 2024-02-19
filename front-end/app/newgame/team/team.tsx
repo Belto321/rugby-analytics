@@ -2,15 +2,21 @@
 import { useForm, Controller } from "react-hook-form";
 import Select from 'react-select';
 import { PlayersType } from "./page";
+import { useRouter } from "next/navigation";
+
 
 type PropsType = {
     players: PlayersType[] | undefined
     gameId: { id: string } | undefined
 }
 
+type DataType = {
+  validPlayers: PlayersType[]
+}
+
 export default function TeamForm({ players, gameId }: PropsType) {
+    const router = useRouter()
     const numberGameId = Number(gameId?.id)
-    console.log(numberGameId)
     let validPlayers: PlayersType[]
     if(!players){
         validPlayers = [{id: 0, name: "Player", number: 0, position: 0}]
@@ -20,16 +26,16 @@ export default function TeamForm({ players, gameId }: PropsType) {
     const { control, handleSubmit, register } = useForm<PlayersType[]>({
       defaultValues: validPlayers
     });
-
     
   
-    const onSubmit = async (data:  PlayersType[] ) => {
+    const onSubmit = async ({...data}: PlayersType[] ) => {
       const response = fetch('http://localhost:3101/players', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({gameId: numberGameId, players: data.validPlayers})
       })
       console.log(response)
+      router.push(`/newgame/events?id=${numberGameId}`)
     };
 
   return (
