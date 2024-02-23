@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:laica2003@localhost:5432/rugbyanalytics?schema=public"
 }
 
 model team {

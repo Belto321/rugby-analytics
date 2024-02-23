@@ -6,7 +6,6 @@ const eventRouter = express.Router();
 
 eventRouter.post('/', async (req: Request, res: Response) => {
     const { gameId, playerId, half, eventTypeId } = req.body
-    console.log(gameId, playerId, eventTypeId, half)
     try {
         const response = await prisma.event.create({
             data: {
@@ -16,7 +15,24 @@ eventRouter.post('/', async (req: Request, res: Response) => {
                 EventTypeId: eventTypeId
             }
         })
-        res.json(response)
+        if(eventTypeId <= 2){
+            const totalTackles = await prisma.event.count({
+                where: {
+                    GameId: gameId,
+                    EventTypeId: 1
+                }
+            })
+            const totalPasses = await prisma.event.count({
+                where: {
+                    GameId: gameId,
+                    EventTypeId: 2
+                }
+            })
+            res.json({totalPasses, totalTackles})
+        }else{
+
+            res.json(response)
+        }
  
     } catch (error) {
         console.log(error)
