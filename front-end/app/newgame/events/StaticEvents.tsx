@@ -45,21 +45,6 @@
       return (
         <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
           <div className="mb-4">
-            <div className="flex items-center">
-            <input
-                type="checkbox"
-                id="gameHalfSwitch"
-                {...register('gameHalf')}
-                defaultChecked // Shown by default in the first half
-                className="mr-2 h-6 w-6 border-gray-300 rounded-md focus:ring-indigo-500"
-            />
-            <label htmlFor="gameHalfSwitch" className="text-sm font-medium text-gray-700">
-                First Half
-            </label>
-            </div>
-          </div>
-    
-          <div className="mb-4">
             <label htmlFor="player" className="block text-sm font-medium text-gray-700">
               Player
             </label>

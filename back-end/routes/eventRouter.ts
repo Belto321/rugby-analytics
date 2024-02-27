@@ -4,6 +4,11 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 const eventRouter = express.Router();
 
+eventRouter.get('/', async (req, res) => {
+    const response = await prisma.event.findMany()
+    res.send(response)
+})
+
 eventRouter.post('/', async (req: Request, res: Response) => {
     const { gameId, playerId, half, eventTypeId } = req.body
     try {

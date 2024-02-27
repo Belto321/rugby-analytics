@@ -11,14 +11,14 @@ datasource db {
 }
 
 model team {
-  id     Int      @id @default(autoincrement())
-  name   String
+  id         Int      @id @default(autoincrement())
+  name       String
+  position   Int
+  number     Int
 }
 
 model players { 
   name        String   @id @unique
-  position    Int
-  number      Int
   gamePlayers gameplayer[]
 }
 
@@ -51,6 +51,8 @@ model gameplayer {
   gameId    Int
   player    players  @relation(fields: [playerId], references: [name])
   playerId  String
+  number    Int
+  position  Int
 
   @@id([gameId, playerId])
 }

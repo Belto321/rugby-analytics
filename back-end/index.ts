@@ -3,6 +3,10 @@ import newGameRouter from './routes/newGameRouter';
 import playersRouter from './routes/playersRouter';
 import eventRouter from './routes/eventRouter'
 import eventTypeRouter from './routes/eventTypeRouter';
+import gamesRouter from './routes/gamesRouter';
+import teamRouter from './routes/teamRouter';
+import gameplayerRouter from './routes/gamePlayersRouter';
+import exportCsvRouter from './routes/exportCsvRouter';
 const cors = require('cors');
 
 const app = express();
@@ -15,6 +19,10 @@ app.use('/newgame', newGameRouter);
 app.use('/players', playersRouter);
 app.use('/event', eventRouter );
 app.use('/eventtype', eventTypeRouter)
+app.use('/games', gamesRouter);
+app.use('/team', teamRouter);
+app.use('/gameplayer', gameplayerRouter)
+app.use('/export-csv', exportCsvRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

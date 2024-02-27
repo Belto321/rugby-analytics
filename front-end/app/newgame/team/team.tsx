@@ -23,16 +23,15 @@ export default function TeamForm({ players, gameId }: PropsType) {
     }else{
         validPlayers = players
     }
-    const { control, handleSubmit, register } = useForm<PlayersType[]>({
-      defaultValues: validPlayers
-    });
+    const { control, handleSubmit, register } = useForm<PlayersType[]>();
     
   
     const onSubmit = async ({...data}: PlayersType[] ) => {
-      const response = fetch('http://localhost:3101/players', {
+      console.log(data)
+      const response = fetch('http://localhost:3101/gameplayer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({gameId: numberGameId, players: data.validPlayers})
+        body: JSON.stringify({gameId: numberGameId, players: data.players})
       })
       console.log(response)
       router.push(`/newgame/events?id=${numberGameId}`)
@@ -43,18 +42,31 @@ export default function TeamForm({ players, gameId }: PropsType) {
       {Array.from({ length: 15 }, (_, index) => (
         <div key={index} className="bg-gray-100 p-4 rounded-lg border border-gray-300 space-y-2">
           <div>
-            <p>Position: {index + 1 }</p>
+            <p>Position:</p>
+            <Controller
+              name={`players.${index}.position` as `${number}.position`}
+              control={control}
+              defaultValue={index + 1}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  type="number"
+                  placeholder="Position"
+                  className="text-gray-600 w-full mt-2"
+                />
+              )}
+              />
           </div>
           <div>
             <p>Player:</p>
             <Controller
-              name={`validPlayers[${index}].name` as `${number}.name`}
+              name={`players.${index}.name` as const}
               control={control}
               defaultValue={validPlayers[index].name}
               render={({ field }) => (
                 <Select
                   {...field}
-                  options={validPlayers}
+                  options={players}
                   getOptionLabel={(option) => option.name}
                   getOptionValue={(option) => {return option.name}}
                   isSearchable
@@ -68,7 +80,7 @@ export default function TeamForm({ players, gameId }: PropsType) {
           <div>
             <p>Number:</p>         
             <Controller
-              name={`validPlayers[${index}].number` as `${number}.number`}
+              name={`players[${index}].number` as `${number}.number`}
               control={control}
               defaultValue={validPlayers[index].number}
               render={({ field }) => (

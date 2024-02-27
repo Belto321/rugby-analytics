@@ -30,28 +30,55 @@ interface CreatePlayersRequest {
 }
 
 playersRouter.post('/', async (req, res) => {
-  const { gameId, players }: CreatePlayersRequest = req.body
+  const { name } = req.body
   
-  if(!gameId || !players){
+  if(!name){
     res.status(400).send('Invalid data')
   }
 
   try{
-    players.map( async player => {
-        const response = await prisma.gameplayer.create({
+        const response = await prisma.players.create({
           data: {
-            gameId,
-            playerId: player.name
+            name,
           }
         })
+
         if(!response){res.status(400).send("Something went wrong")}
-      })
-        res.json({ message: 'Team created and associated with the game successfully'});
+
+        const players = await prisma.players.findMany()
+
+        if(!players){res.status(400).send("Something went wrong")}
+
+        res.json(players);
       }catch(error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
       }
     });
+
+// playersRouter.post('/', async (req, res) => {
+//   const { gameId, players }: CreatePlayersRequest = req.body
+  
+//   if(!gameId || !players){
+//     res.status(400).send('Invalid data')
+//   }
+
+//   try{
+//     players.map( async player => {
+//         const response = await prisma.gameplayer.create({
+//           data: {
+//             gameId,
+//             playerId: player.name
+//           }
+//         })
+//         if(!response){res.status(400).send("Something went wrong")}
+//       })
+//         res.json({ message: 'Team created and associated with the game successfully'});
+//       }catch(error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//       }
+//     });
 
 
 export default playersRouter;

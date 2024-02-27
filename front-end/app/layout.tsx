@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SiGoogleanalytics } from "react-icons/si";
 import "./globals.css";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,8 +26,15 @@ export default function RootLayout({
             <h3 className="text-3xl font-bold text-end"> ugby Analytics</h3>
           </div>
           <div className="mr-20 flex flex-row items-center space-x-12 text-blue-700 font-bold text-xl">
+            <Link href="/newgame">
             <h4>New Game</h4>
+            </Link>
+            <Link href="/games">
+            <h4>Games</h4>
+            </Link>
+            <Link href="/team">
             <h4>Team</h4>
+            </Link>
             <h4>Analytics</h4>
             <h4>Dates</h4>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full">
