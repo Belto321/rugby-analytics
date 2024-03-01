@@ -77,4 +77,44 @@ export async function seedPlayesrs() {
         name: 'Pipo Vasquez',
         }
     })
+    await prisma.players.create({
+        data: {
+        name: 'Santi Correa',
+        }
+    })
+    await prisma.players.create({
+        data: {
+        name: 'Manolo',
+        }
+    })
+    await prisma.players.create({
+        data: {
+        name: 'Leto',
+        }
+    })
+    await prisma.players.create({
+        data: {
+        name: 'Peluca',
+        }
+    })
+    await prisma.players.create({
+        data: {
+        name: 'Matias',
+        }
+    })
+    await prisma.players.create({
+        data: {
+        name: 'Juan Carrau',
+        }
+    })
+    await prisma.players.create({
+        data: {
+        name: 'Foncho',
+        }
+    })
+    await prisma.players.create({
+        data: {
+        name: 'Tomas Pieroni',
+        }
+    })
 }

@@ -1,14 +1,20 @@
 import { EventForm } from "./EventForm";
 
 type ParamsType = {
-    searchParams?: {
+    searchParams: {
       id: string;
     };
   }
+  type GamePlayersType = {
+     id: string 
+  }
+  export type AllPlayersType = {
+    name: string
+  }
 
   export type PlayersType = {
-    id: number
-    name: string
+    gameId: number
+    playerId: string
     number: number
     position: number
   }
@@ -20,9 +26,11 @@ type ParamsType = {
     score: number
   }
 
-  async function getPlayers(): Promise<PlayersType[] | undefined>{
+  export const dynamic = 'force-dynamic'
+
+  async function getPlayers( gameId : GamePlayersType): Promise<PlayersType[] | undefined>{
     try{
-    const response = await fetch('http://localhost:3101/players')
+    const response = await fetch(`http://localhost:3101/gameplayer/${gameId?.id}`)
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -31,6 +39,19 @@ type ParamsType = {
   }catch(error){
     console.log(error)
   }
+  }
+
+  async function getAllPlayers(): Promise<AllPlayersType[] | undefined> {
+    try{
+      const response = await fetch('http://localhost:3101/players')
+      if(!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+      const allPlayers = response.json()
+      return allPlayers
+    }catch(error){
+      console.log(error)
+    }
   }
 
   async function getEventTypes(): Promise<EventTypesType[] | undefined> {
@@ -46,10 +67,19 @@ type ParamsType = {
     }
   }
 
+
+
 export default async function Events({searchParams}: ParamsType){
-  const players = await getPlayers()
+  const players = await getPlayers(searchParams)
+  const allPlayers = await getAllPlayers()
   const eventTypes = await getEventTypes()
+  const gameId = Number(searchParams?.id)
     return(
-        <EventForm gameId={searchParams} players={players} eventTypes={eventTypes} />
+        <EventForm 
+          gameId={gameId} 
+          players={players} 
+          eventTypes={eventTypes} 
+          allPlayers={allPlayers}
+        />
     )
 }

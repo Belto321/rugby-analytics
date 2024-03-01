@@ -17,42 +17,51 @@ model team {
   number     Int
 }
 
-model players { 
-  name        String   @id @unique
+model players {
+  name        String      @id @unique
   gamePlayers gameplayer[]
+  events      event[]
 }
 
 model game {
-  id          Int      @id @default(autoincrement())
-  date        String   
+  id          Int         @id @default(autoincrement())
+  date        String
   place       String
   opponent    String
   division    String
   gamePlayers gameplayer[]
+  events      event[]
 }
 
 model event {
-  id          Int      @id @default(autoincrement())
-  GameId      Int
+  id          Int        @id @default(autoincrement())
   half        Boolean
-  PlayerId    String
-  EventTypeId Int
+  player      players    @relation(fields: [playerId], references: [name])
+  playerId    String
+  game        game       @relation(fields: [gameId], references: [id])
+  gameId      Int
+  eventType   eventtype  @relation(fields: [eventTypeId], references: [id])
+  eventTypeId Int
 }
 
 model eventtype {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
   subType   Int
   score     Int        @default(0)
+  events      event[]
 }
 
 model gameplayer {
-  game      game     @relation(fields: [gameId], references: [id])
-  gameId    Int
-  player    players  @relation(fields: [playerId], references: [name])
-  playerId  String
-  number    Int
-  position  Int
+  game        game       @relation(fields: [gameId], references: [id])
+  gameId      Int
+  player      players    @relation(fields: [playerId], references: [name])
+  playerId    String
+  number      Int
+  position    Int
+  titular     Boolean    @default(true)
+  isViewable  Boolean    @default(true)
+
 
   @@id([gameId, playerId])
 }

@@ -1,16 +1,14 @@
 import TeamForm from "./team";
 
 export type PlayersType = {
-  id: number
   name: string
-  number: number
-  position: number
 }
 type ParamsType = {
   searchParams?: {
     id: string;
   };
 }
+export const dynamic = 'force-dynamic'
 
 async function getPlayers(): Promise<PlayersType[] | undefined>{
   try{
@@ -27,7 +25,8 @@ async function getPlayers(): Promise<PlayersType[] | undefined>{
 
 export default async function index({searchParams}: ParamsType){
   const players = await getPlayers()
+  const gameId = Number(searchParams?.id)
   return (
-    <TeamForm players={players} gameId={searchParams}/>
+    <TeamForm players={players} gameId={gameId}/>
   )
 }

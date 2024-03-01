@@ -13,19 +13,12 @@
     type PropsType = {
       players: PlayersType[] | undefined
       eventTypes: EventTypesType[] | undefined
-      gameId: { id: string } | undefined
+      gameId: number
       half: boolean
   }
-
-    type FormattedDataType = {
-        gameHalf: true | false;
-        player: string
-        event: number
-    }
     
     export function StaticEvents({ gameId, players, eventTypes, half }: PropsType){
-      const numberGameId = Number(gameId?.id)
-      const { register, handleSubmit, control } = useForm<FormDataType>();
+      const { handleSubmit, control } = useForm<FormDataType>();
     
       const onSubmit = async (data: FormDataType) => {
         //TODO validar el form no empty
@@ -33,7 +26,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            gameId: numberGameId, 
+            gameId: gameId, 
             playerId: data.player.value, 
             eventTypeId: Number(data.event.value), 
             half: half
@@ -54,7 +47,7 @@
               render={({ field }) => (
                 <Select
                   {...field}
-                  options={players?.map(option => ({ value: option.name, label: option.name }))}
+                  options={players?.map(option => ({ value: option.playerId, label: option.playerId }))}
                   className="mt-1 w-full"
                   placeholder="Select a player"
                 />

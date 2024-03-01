@@ -14,23 +14,23 @@ eventRouter.post('/', async (req: Request, res: Response) => {
     try {
         const response = await prisma.event.create({
             data: {
-                GameId: gameId,
+                gameId: gameId,
                 half: half,
-                PlayerId: playerId,
-                EventTypeId: eventTypeId
+                playerId: playerId,
+                eventTypeId: eventTypeId
             }
         })
         if(eventTypeId <= 2){
             const totalTackles = await prisma.event.count({
                 where: {
-                    GameId: gameId,
-                    EventTypeId: 1
+                    gameId: gameId,
+                    eventTypeId: 1
                 }
             })
             const totalPasses = await prisma.event.count({
                 where: {
-                    GameId: gameId,
-                    EventTypeId: 2
+                    gameId: gameId,
+                    eventTypeId: 2
                 }
             })
             res.json({totalPasses, totalTackles})
