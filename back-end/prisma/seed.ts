@@ -1,10 +1,12 @@
 import { PrismaClient } from '@prisma/client'
 import { seedPlayesrs } from './seeders/players'
 import { seedEventTypes } from './seeders/evantTypes'
+import { seedDescriptions } from './seeders/descriptions'
 const prisma = new PrismaClient()
 async function main() {
     await seedPlayesrs()
     await seedEventTypes()
+    await seedDescriptions()
 }
 
 main()

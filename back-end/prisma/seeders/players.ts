@@ -4,6 +4,16 @@ const prisma = new PrismaClient()
 export async function seedPlayesrs() {
     await prisma.players.create({
         data: {
+        name: 'Opponent',
+        }
+    })
+    await prisma.players.create({
+        data: {
+        name: 'Team',
+        }
+    })
+    await prisma.players.create({
+        data: {
         name: 'Joaquin Borrazas',
         }
     })
@@ -14,7 +24,7 @@ export async function seedPlayesrs() {
     })
     await prisma.players.create({
         data: {
-        name: 'Tomi Cubro',
+        name: 'Felo',
         }
     })
     await prisma.players.create({
@@ -24,12 +34,12 @@ export async function seedPlayesrs() {
     })
     await prisma.players.create({
         data: {
-        name: 'Molle',
+        name: 'Tachu',
         }
     })
     await prisma.players.create({
         data: {
-        name: 'Juanbe Ponce',
+        name: 'Peluca',
         }
     })
     await prisma.players.create({
@@ -64,17 +74,17 @@ export async function seedPlayesrs() {
     })
     await prisma.players.create({
         data: {
-        name: 'Sebastian Obrien',
+        name: 'Piscu',
         }
     })
     await prisma.players.create({
         data: {
-        name: 'Pelusa Mattos',
+        name: 'Goma',
         }
     })
     await prisma.players.create({
         data: {
-        name: 'Pipo Vasquez',
+        name: 'Juanpe',
         }
     })
     await prisma.players.create({
@@ -94,12 +104,12 @@ export async function seedPlayesrs() {
     })
     await prisma.players.create({
         data: {
-        name: 'Peluca',
+        name: 'Mateo Eche',
         }
     })
     await prisma.players.create({
         data: {
-        name: 'Matias',
+        name: 'Tomi Ubilla',
         }
     })
     await prisma.players.create({

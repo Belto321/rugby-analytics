@@ -34,22 +34,35 @@ model game {
 }
 
 model event {
-  id          Int        @id @default(autoincrement())
-  half        Boolean
-  player      players    @relation(fields: [playerId], references: [name])
-  playerId    String
-  game        game       @relation(fields: [gameId], references: [id])
-  gameId      Int
-  eventType   eventtype  @relation(fields: [eventTypeId], references: [id])
-  eventTypeId Int
+  id            Int        @id @default(autoincrement())
+  half          Boolean
+  player        players    @relation(fields: [playerId], references: [name])
+  playerId      String
+  game          game       @relation(fields: [gameId], references: [id])
+  gameId        Int
+  eventType     eventtype  @relation(fields: [eventTypeId], references: [id])
+  eventTypeId   Int
+  place         String?
+  result        Boolean?
+  description   description? @relation(fields: [descriptionId], references: [id])
+  descriptionId Int?
 }
 
 model eventtype {
-  id        Int        @id @default(autoincrement())
-  name      String
-  subType   Int
-  score     Int        @default(0)
-  events      event[]
+  id            Int        @id @default(autoincrement())
+  name          String
+  subType       Int
+  score         Int        @default(0)
+  events        event[]
+  descriptions  description[]
+}
+
+model description {
+  id            Int      @id
+  description   String
+  eventType     eventtype  @relation(fields: [eventTypeId], references: [id])
+  eventTypeId   Int
+  events        event[]
 }
 
 model gameplayer {

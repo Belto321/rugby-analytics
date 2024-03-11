@@ -12,6 +12,12 @@ type ParamsType = {
     name: string
   }
 
+  export type DescriptionType = {
+    id: number
+    description: string
+    eventTypeId: number
+  }
+
   export type PlayersType = {
     gameId: number
     playerId: string
@@ -68,18 +74,33 @@ type ParamsType = {
   }
 
 
+  async function getDescriptions(): Promise<DescriptionType[] | undefined> {
+    try{
+      const response = await fetch('http://localhost:3101/descriptions')
+      if(!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+      const descriptions = response.json()
+      return descriptions
+    }catch(error){
+      console.log(error)
+    }
+  }
+
 
 export default async function Events({searchParams}: ParamsType){
   const players = await getPlayers(searchParams)
   const allPlayers = await getAllPlayers()
   const eventTypes = await getEventTypes()
   const gameId = Number(searchParams?.id)
+  const descriptions = await getDescriptions()
     return(
         <EventForm 
           gameId={gameId} 
           players={players} 
           eventTypes={eventTypes} 
           allPlayers={allPlayers}
+          descriptions={descriptions}
         />
     )
 }

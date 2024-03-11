@@ -8,7 +8,7 @@ type PropsTypes = {
 
 async function downloader(game: Game) {
     try {
-      const response = await fetch(`http://localhost:3101/export-csv/game/${game.id}`);
+      const response = await fetch(`http://localhost:3101/export-csv/${game.id}`);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');

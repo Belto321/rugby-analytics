@@ -7,6 +7,7 @@ import gamesRouter from './routes/gamesRouter';
 import teamRouter from './routes/teamRouter';
 import gameplayerRouter from './routes/gamePlayersRouter';
 import exportCsvRouter from './routes/exportCsvRouter';
+import descriptionsRouter from './routes/descriptionsRouter';
 const cors = require('cors');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/games', gamesRouter);
 app.use('/team', teamRouter);
 app.use('/gameplayer', gameplayerRouter)
 app.use('/export-csv', exportCsvRouter)
+app.use('/descriptions', descriptionsRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

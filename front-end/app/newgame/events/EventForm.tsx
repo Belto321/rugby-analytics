@@ -1,6 +1,6 @@
 'use client'
 import { useState, ChangeEvent } from 'react';
-import { AllPlayersType, EventTypesType, PlayersType } from './page';
+import { AllPlayersType, DescriptionType, EventTypesType, PlayersType } from './page';
 import { GameEvents } from './GameEvents';
 import { StaticEvents } from './StaticEvents';
 import { PlayerChange } from './PlayerChange';
@@ -10,10 +10,11 @@ type PropsType = {
   eventTypes: EventTypesType[] | undefined
   gameId: number
   allPlayers: AllPlayersType[] | undefined
+  descriptions: DescriptionType[] | undefined
 }
 
 
-export function EventForm({ gameId, players, eventTypes, allPlayers }: PropsType){
+export function EventForm({ gameId, players, eventTypes, allPlayers, descriptions }: PropsType){
   const [ half, setHalf ] = useState(true)
   const [ change, setChange ] = useState(false)
 
@@ -37,7 +38,7 @@ export function EventForm({ gameId, players, eventTypes, allPlayers }: PropsType
         </div>
         <div className="mt-8 mx-36 flex flex-row-reverse justify-between">
         <GameEvents players={players} gameId={gameId} half={half}/>
-        <StaticEvents gameId={gameId} players={players} eventTypes={eventTypes} half={half}/>
+        <StaticEvents gameId={gameId} players={players} eventTypes={eventTypes} half={half} descriptions={descriptions}/>
         </div>
         <div className='mt-8 flex !justify-center flex-col'>
           <button onClick={()=> setChange(!change)}
